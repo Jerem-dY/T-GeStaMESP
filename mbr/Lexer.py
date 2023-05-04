@@ -1,10 +1,13 @@
 from enum import Enum, auto
 from .Logger import Logger, DEFAULT_LOG
-from .Data import FuncTypes
+from .Data import FuncTypes, DataTypes
 
 
 def escape(txt: str) -> str:
     return txt.replace('\n', '\\n').replace('\t', '\\t').replace('\r', '\\r')
+    
+def unescape(txt: str) -> str:
+    return txt.replace('\\n', '\n').replace('\\t', '\t').replace('\\r', '\r')
 
 
 class Lexer:
@@ -32,15 +35,16 @@ class Lexer:
         
         # La pile des objets
         self._objects = {}
+        self._current_obj = None
         
         # type de la fonction
-        func_type = FuncTypes.THROUGH
+        self._func_type = FuncTypes.THROUGH
         
         # buffers
-        self._ids = []
-        
-        self._buffer_objs = []
-        self._obj_level = 0
+        self._id_buffer = ""
+        self._expression_buffer = ""
+        self._litt_value_buffer = ""
+        self._litt_char = None
         
         
         for i, c in enumerate(txt):
@@ -56,12 +60,12 @@ class Lexer:
                     
                         case '#': # Détection des commentaires
                             self._stack.append(Lexer.States.COMMENT)
-                            self.log.print(f"{'-'*self._obj_level}>\tCommentaire ouvert.")
+                            self.log.print(f">\tCommentaire ouvert.")
                             
                         case c if c.isalnum(): # Détection des identifiants
                             self._stack.append(Lexer.States.IDENTIFIER)
-                            self._ids.append(c)
-                            self.log.print(f"{'-'*self._obj_level}>\tIdentifiant ouvert.")
+                            self._id_buffer += c
+                            self.log.print(f">\tIdentifiant ouvert.")
                 
                 
                 # Quand un identifiant d'objet est en cours
@@ -71,30 +75,41 @@ class Lexer:
                     
                         case '{': # Détection des fonctions
                             self._stack.append(Lexer.States.FUNC)
-                            self._open_object()
-                            self.log.print(f"{'-'*self._obj_level}>\tFonction ouverte.")
+                            self._open_object(DataTypes.FUNC)
+                            self.log.print(f">\tFonction ouverte.")
                             
                         case '(': # Détection des sets
-                            self._open_object()
                             self._stack.append(Lexer.States.SET)
-                            self.log.print(f"{'-'*self._obj_level}>\tSet ouvert.")
+                            self._open_object(DataTypes.SET)
+                            self.log.print(f">\tSet ouvert.")
                           
                         case '*': # Détection du typage des fonctions
-                            func_type = func_type | FuncTypes.ENTRY_POINT
+                            self._func_type = self._func_type | FuncTypes.ENTRY_POINT
                             
                         case ':': # Détection du typage des fonctions
-                            func_type = func_type | FuncTypes.END_POINT
-                    
-                        case c if c.isalnum():
-                            self._ids[-1] += c
+                            self._func_type = self._func_type | FuncTypes.END_POINT
                             
-                        case c if c.isspace():
+                            
+                        case c if c.isalnum():
+                            self._id_buffer += c
+                    
+                        case _:
+                            #TODO: Error
                             pass
                 
                 
                 # Quand une chaîne de caractère littérale est en cours
                 case Lexer.States.LITTERAL:
-                    pass
+                    
+                    match c:
+                        
+                        case self._litt_char:
+                            self._stack.pop()
+                            self._current_obj.append(self._litt_value_buffer)
+                            self._litt_value_buffer = ''
+                            
+                        case _:
+                            self._litt_value_buffer += c
                 
                 
                 # Quand une fonction est en construction
@@ -106,15 +121,15 @@ class Lexer:
                             self._stack.append(Lexer.States.COMMENT)
                             
                         case '}':
-                            
-                            self.log.print(f"{'-'*self._obj_level}>\tFonction fermée.")
+                        
+                            self._close_object()
+                            self.log.print(f">\tFonction fermée.")
                             
                         case c if c.isalnum() or c in {'@', '.'}: # Détection des expressions
                         
                             self._stack.append(Lexer.States.EXPRESSION)
-                            self._open_object()
-                            self._ids.append(c)
-                            self.log.print(f"{'-'*self._obj_level}>\tExpression ouverte.")
+                            self._expression_buffer = c
+                            self.log.print(f">\tExpression ouverte.")
                 
                 
                 # Quand un set de valeurs est en construction
@@ -124,7 +139,14 @@ class Lexer:
                     
                         case ')':
                             self._close_object()
-                            self.log.print(f"{'-'*self._obj_level}>\tSet fermé.")
+                            self.log.print(f">\tSet fermé.")
+                            
+                        case "'" | '"':
+                            self._litt_char = c
+                            self._stack.append(Lexer.States.LITTERAL)
+                            self.log.print(f">\tValeur littérale ouverte.")
+                            
+                            
                 
                 # Quand on est dans un commentaire
                 case Lexer.States.COMMENT:
@@ -133,7 +155,7 @@ class Lexer:
                         
                         case '\n':
                             self._stack.pop()
-                            self.log.print(f"{'-'*self._obj_level}>\tCommentaire fermé.")
+                            self.log.print(f">\tCommentaire fermé.")
                             
                             
                 case Lexer.States.EXPRESSION:
@@ -141,26 +163,40 @@ class Lexer:
                     match c:
                     
                     
-                        case c if c.isalnum() or c in {'=', '.', '^'}: # Détection d'un caractère d'expression
-                            self._ids[-1] += c
+                        case c if c.isalnum() or c in {'=', '.', '^', '%'}: # Détection d'un caractère d'expression
+                            self._expression_buffer += c
                     
                         case '\n' | ';': # Détection d'un caractère de fin d'expression
-                            self._close_object()
-                            self.log.print(f"{'-'*self._obj_level}>\tExpression fermée.")
+                            self._close_expression()
+                            self.log.print(f">\tExpression fermée.")
                             
                         case '}': # Détection d'un caractère de fin d'expression ET de fin de fonction
-                            self._close_object()
-                            self.log.print(f"{'-'*self._obj_level}>\tExpression fermée.")
+                            self._close_expression()
+                            self.log.print(f">\tExpression fermée.")
                             
                             self._close_object()
-                            self.log.print(f"{'-'*self._obj_level}>\tFonction fermée.")
+                            self.log.print(f">\tFonction fermée.")
                             
     
     
-    def _open_object(self):
+    def _open_object(self, type: DataTypes):
     
-        self._obj_level += 1
+        if type == DataTypes.FUNC:
+            self._current_obj = {'mode' : self._func_type, 'expr' : {}}
+            self._func_type = FuncTypes.THROUGH
+        else:
+            self._current_obj = []
+    
+    
+    def _close_expression(self):
+        
+        state = self._stack.pop()
+        
+        expr = self._expression_buffer.split('=')
 
+        self._current_obj['expr'][expr[0]] = expr[1]
+    
+    
     def _close_object(self):
     
         state = self._stack.pop()
@@ -168,12 +204,17 @@ class Lexer:
         if self._stack[-1] == Lexer.States.IDENTIFIER:
             self._stack.pop()
         
-        name = self._ids.pop()
+        name = self._id_buffer
+        self._objects[name] = self._current_obj
+        self._id_buffer = ""
         
-
+        self.log.print(f"Objet : '{name}'")
         
-        self._obj_level -= 1
         
-        self.log.print(f"{'-'*self._obj_level}Buffer : '{self._buffer_objs!r}'")
         
-        self.log.print(f"{'-'*self._obj_level}Objet : '{name}'")
+        
+    def __iter__(self):
+        return iter(self._objects)
+        
+    def __getitem__(self, item: str):
+        return self._objects[item]

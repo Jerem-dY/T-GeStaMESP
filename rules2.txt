@@ -1,0 +1,19 @@
+
+
+
+# Les caractères formant les mots
+Fo:{
+	sep = Sep
+	wpunc = PoncFaible
+	spunc = PoncForte
+	@ = .
+}
+
+
+# Les séparateurs
+Sep:*{
+	sep = .
+	wpunc = PoncFaible
+	spunc = PoncForte
+	@ = Fo
+}

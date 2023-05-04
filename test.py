@@ -1,17 +1,12 @@
-from mbr import Lexer
-import json
-
+import mbr
 
 
 if __name__ == "__main__":
 
-    with open("rules.txt", mode="r", encoding="utf-8") as f:
-        content = f.read()
-        
-        lex = Lexer.Lexer(content)
-        
-        print(json.dumps(lex._objects, ensure_ascii=False, indent='\t'))
-        
-        
-        
-    #print(lex)
+    out = mbr.Compiler(["rules1.txt", "rules2.txt"])
+    
+    out.save("test")
+    
+    ruleset = mbr.Compiler.load("test.mbr")
+    
+    print(ruleset)

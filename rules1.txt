@@ -2,6 +2,7 @@
 # . l'état actuel
 # @ les tokens qui ne sont pas dans les classes mentionnées
 # ^ n'écrit pas (^. reste sur place et n'écrit pas, ^state n'écrit pas et change d'état)
+# % écrit après
 # : état final
 # * état initial
 
@@ -10,6 +11,7 @@
 wpunc(',' ';' ':')
 spunc('.' '?' '!')
 sep(' ' '\n' '\t')
+apos("'" '’')
 
 # La ponctuation forte
 PoncForte:{
@@ -22,23 +24,6 @@ PoncForte:{
 # La ponctuation faible
 PoncFaible:{
 	sep = Sep
-	wpunc = PoncFaible
-	spunc = PoncForte
-	@ = Fo
-}
-
-# Les caractères formant les mots
-Fo:{
-	sep = Sep
-	wpunc = PoncFaible
-	spunc = PoncForte
-	@ = .
-}
-
-
-# Les séparateurs
-Sep:*{
-	sep = .
 	wpunc = PoncFaible
 	spunc = PoncForte
 	@ = Fo
