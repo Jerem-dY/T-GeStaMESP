@@ -1,0 +1,79 @@
+# Lexique pour le découpage en chunks
+
+
+cconj(
+	'mais'
+	'et'
+	'que'
+	"qu'"
+	"quand"
+)
+
+
+det(
+	"les"
+	"Les"
+	"des"
+	"un"
+	"Un"
+	"le"
+	"Le"
+	"une"
+	"Une"
+	"toute"
+	"quelque"
+	"la"
+	"La"
+	"ce"
+	"aucun"
+	"cette"
+)
+
+
+rpron(
+	"se"
+	"me"
+	"m'"
+	"t'"
+)
+
+pron(
+	"j'"
+	"je"
+	"cela"
+	"il"
+	"vous"
+	"on"
+	"ça"
+	"qui"
+	"c'"
+	"lui-même"
+)
+
+
+adp(
+	"sur"
+	"de"
+	"en"
+	"dans"
+	"après"
+	"à"
+	"par"
+	"au"
+	"du"
+	"pour"
+)
+
+qt(
+	'“' '”' '«' '»'
+)
+
+adv_intens(
+"très"
+"peu"
+"beaucoup"
+"plus"
+)
+
+spunc('.' '?' '!')
+wpunc(',' ';' ':')

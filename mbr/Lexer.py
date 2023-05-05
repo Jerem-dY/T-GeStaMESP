@@ -11,6 +11,8 @@ def unescape(txt: str) -> str:
 
 
 class Lexer:
+    """Lexer et Parser
+    """
 
 
     class States(Enum):
@@ -46,11 +48,14 @@ class Lexer:
         self._litt_value_buffer = ""
         self._litt_char = None
         
+        self._lines = 1
+        self._start_col = 0
+        self._i = 1
         
-        for i, c in enumerate(txt):
+        for self._i, c in enumerate(txt, start=1):
         
-            self.log.print(f"{i:3<}/{len(txt)}\t'{escape(c)}'\t{' | '.join([el.name for el in self._stack if el.name != 'EMPTY' or len(self._stack) <= 1])}")
-        
+            #self.log.print(self.get_position() + f"\t'{escape(c)}'\t{' | '.join([el.name for el in self._stack if el.name != 'EMPTY' or len(self._stack) <= 1])}")
+
             match self._stack[-1]:
             
                 # Quand la pile est vide (aucun objet en cours de construction)
@@ -60,12 +65,19 @@ class Lexer:
                     
                         case '#': # Détection des commentaires
                             self._stack.append(Lexer.States.COMMENT)
-                            self.log.print(f">\tCommentaire ouvert.")
+                            self.log.print(self.get_position() + f">\tCommentaire ouvert.")
                             
                         case c if c.isalnum(): # Détection des identifiants
                             self._stack.append(Lexer.States.IDENTIFIER)
                             self._id_buffer += c
-                            self.log.print(f">\tIdentifiant ouvert.")
+                            self.log.print(self.get_position() + f">\tIdentifiant ouvert.")
+                            
+                            
+                        case '\n' | '\t' | ' ':
+                            pass
+                            
+                        case _:
+                            raise SyntaxError(self.get_position() + f"Undefined token: {c}")
                 
                 
                 # Quand un identifiant d'objet est en cours
@@ -76,12 +88,12 @@ class Lexer:
                         case '{': # Détection des fonctions
                             self._stack.append(Lexer.States.FUNC)
                             self._open_object(DataTypes.FUNC)
-                            self.log.print(f">\tFonction ouverte.")
+                            self.log.print(self.get_position() + f">\tFonction ouverte.")
                             
                         case '(': # Détection des sets
                             self._stack.append(Lexer.States.SET)
                             self._open_object(DataTypes.SET)
-                            self.log.print(f">\tSet ouvert.")
+                            self.log.print(self.get_position() + f">\tSet ouvert.")
                           
                         case '*': # Détection du typage des fonctions
                             self._func_type = self._func_type | FuncTypes.ENTRY_POINT
@@ -90,12 +102,11 @@ class Lexer:
                             self._func_type = self._func_type | FuncTypes.END_POINT
                             
                             
-                        case c if c.isalnum():
+                        case c if c.isalnum() or c in {'_'}:
                             self._id_buffer += c
                     
                         case _:
-                            #TODO: Error
-                            pass
+                            raise SyntaxError(self.get_position() + f"Undefined token: {c}")
                 
                 
                 # Quand une chaîne de caractère littérale est en cours
@@ -107,6 +118,7 @@ class Lexer:
                             self._stack.pop()
                             self._current_obj.append(self._litt_value_buffer)
                             self._litt_value_buffer = ''
+                            self.log.print(self.get_position() + f">\tValeur littérale fermée.")
                             
                         case _:
                             self._litt_value_buffer += c
@@ -123,14 +135,19 @@ class Lexer:
                         case '}':
                         
                             self._close_object()
-                            self.log.print(f">\tFonction fermée.")
+                            self.log.print(self.get_position() + f">\tFonction fermée.")
                             
                         case c if c.isalnum() or c in {'@', '.'}: # Détection des expressions
                         
                             self._stack.append(Lexer.States.EXPRESSION)
                             self._expression_buffer = c
-                            self.log.print(f">\tExpression ouverte.")
-                
+                            self.log.print(self.get_position() + f">\tExpression ouverte.")
+                            
+                        case '\n' | ' ' | '\t':
+                            pass
+                            
+                        case _:
+                            raise SyntaxError(self.get_position() + f"Undefined token: {c}")
                 
                 # Quand un set de valeurs est en construction
                 case Lexer.States.SET:
@@ -139,14 +156,19 @@ class Lexer:
                     
                         case ')':
                             self._close_object()
-                            self.log.print(f">\tSet fermé.")
+                            self.log.print(self.get_position() + f">\tSet fermé.")
                             
                         case "'" | '"':
                             self._litt_char = c
                             self._stack.append(Lexer.States.LITTERAL)
-                            self.log.print(f">\tValeur littérale ouverte.")
+                            self.log.print(self.get_position() + f">\tValeur littérale ouverte.")
                             
                             
+                        case ' ' | '\n' | '\t':
+                            pass
+                            
+                        case _:
+                            raise SyntaxError(self.get_position() + f"Undefined token: {c}")
                 
                 # Quand on est dans un commentaire
                 case Lexer.States.COMMENT:
@@ -155,7 +177,7 @@ class Lexer:
                         
                         case '\n':
                             self._stack.pop()
-                            self.log.print(f">\tCommentaire fermé.")
+                            self.log.print(self.get_position() + f">\tCommentaire fermé.")
                             
                             
                 case Lexer.States.EXPRESSION:
@@ -163,20 +185,31 @@ class Lexer:
                     match c:
                     
                     
-                        case c if c.isalnum() or c in {'=', '.', '^', '%'}: # Détection d'un caractère d'expression
+                        case c if c.isalnum() or c in {'=', '.', '^', '%', '_'}: # Détection d'un caractère d'expression
                             self._expression_buffer += c
                     
                         case '\n' | ';': # Détection d'un caractère de fin d'expression
                             self._close_expression()
-                            self.log.print(f">\tExpression fermée.")
+                            self.log.print(self.get_position() + f">\tExpression fermée.")
                             
                         case '}': # Détection d'un caractère de fin d'expression ET de fin de fonction
                             self._close_expression()
-                            self.log.print(f">\tExpression fermée.")
+                            self.log.print(self.get_position() + f">\tExpression fermée.")
                             
                             self._close_object()
-                            self.log.print(f">\tFonction fermée.")
+                            self.log.print(self.get_position() + f">\tFonction fermée.")
                             
+                            
+                        case '\t' | ' ':
+                            pass
+                            
+                        case _:
+                            raise SyntaxError(self.get_position() + f"Undefined token: {c}")
+                            
+            if c == '\n':
+                self._lines += 1
+                self._start_col = self._i
+    
     
     
     def _open_object(self, type: DataTypes):
@@ -209,8 +242,11 @@ class Lexer:
         self._id_buffer = ""
         
         self.log.print(f"Objet : '{name}'")
+
+
+    def get_position(self):
         
-        
+        return f"{self._lines:03}:{self._i-self._start_col:03}]"
         
         
     def __iter__(self):
