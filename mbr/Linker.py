@@ -1,11 +1,11 @@
-from .Lexer import Lexer
+from .Parser import Parser
 from .Data import FuncTypes
 from .Logger import Logger, DEFAULT_LOG
 
 
 class Linker:
 
-    def __init__(self, sources: list[Lexer], log: Logger = DEFAULT_LOG,  entry_point = ""):
+    def __init__(self, sources: list[Parser], log: Logger = DEFAULT_LOG,  entry_point = ""):
     
         self._symbols: dict = {'set' : {}, 'func' : {'.' : {'expr' : {}, 'mode' : None}}}
         self._entry_point = ""

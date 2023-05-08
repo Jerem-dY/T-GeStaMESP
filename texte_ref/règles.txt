@@ -9,7 +9,6 @@ entry*{
 	spunc = PUNC
 	wpunc = PUNC
 	cconj = CCONJ
-	adv_intens = 
 	@ = NP
 }
 

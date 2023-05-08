@@ -1,3 +1,4 @@
+
 from .Compiler import Compiler
 from .Data import OTHER_
 from .Node import Node
@@ -100,32 +101,32 @@ class Interpreter:
         
         if not no_write:
             if not in_place:
-                self._nodes[-1].append(Node(self._state))
+                self._nodes[-1].append(Node(self._state, origin=f"{self._previous_state} 薔 {self._state}"))
             
             
             if not written: # Si l'on souhaite écrire
                 self._nodes[-1][-1].relateAsParent(self._current_token)
             
             
-            
         
-            
-        """if in_place:
-            
-            if len(self._nodes[-1]) == 0:
-                raise ValueError(f"Pas de noeud en cours.")
-                
-            self._nodes[-1][-1].relateAsParent(self._current_token)
-            
-        if write_before:
-        
-            if len(self._nodes[-1]) == 0:
-                raise ValueError(f"Pas de noeud en cours.")
-                
-            self._nodes[-1][-1].relateAsParent(self._current_token)
-            self._nodes[-1].append(Node(self._state))
-            
-        else:
-            
-            self._nodes[-1].append(Node(self._state))
-            self._nodes[-1][-1].relateAsParent(self._current_token)"""
+class MultipassInterpreter(Interpreter):
+
+    def __init__(self, automata: list[Compiler], tokens: list[str | Node], case_sensitive = True, log: Logger = DEFAULT_LOG):
+
+        current_tokens = tokens
+        tree = [tokens]
+
+        for ps in automata:
+            result = Interpreter(ps, current_tokens, log=log, case_sensitive=case_sensitive)
+            current_tokens = result._nodes[-1]
+            tree.append(result._nodes[-1])
+
+        master_node = Node()
+
+        for n in tree[-1]:
+            master_node.relateAsParent(n)
+
+        tree.append([master_node])
+
+        self._tree = tree
+        self._master_node = master_node

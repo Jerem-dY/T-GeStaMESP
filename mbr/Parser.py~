@@ -1,3 +1,9 @@
+"""
+Ce module contient la classe Parser, qui est en réalité l'alliance d'un scanner (tokeniser) et d'un parser. Elle a pour but de fournir la table des symboles d'un fichier source au linker puis au back-end.
+
+"""
+
+
 from enum import Enum, auto
 from .Logger import Logger, DEFAULT_LOG
 from .Data import FuncTypes, DataTypes
@@ -10,8 +16,8 @@ def unescape(txt: str) -> str:
     return txt.replace('\\n', '\n').replace('\\t', '\t').replace('\\r', '\r')
 
 
-class Lexer:
-    """Lexer et Parser
+class Parser:
+    """Parser et Parser
     """
 
 
@@ -33,7 +39,7 @@ class Lexer:
         self.log = log
         
         # La pile des états
-        self._stack = [Lexer.States.EMPTY]
+        self._stack = [Parser.States.EMPTY]
         
         # La pile des objets
         self._objects = {}
@@ -59,16 +65,16 @@ class Lexer:
             match self._stack[-1]:
             
                 # Quand la pile est vide (aucun objet en cours de construction)
-                case Lexer.States.EMPTY:
+                case Parser.States.EMPTY:
                     
                     match c:
                     
                         case '#': # Détection des commentaires
-                            self._stack.append(Lexer.States.COMMENT)
+                            self._stack.append(Parser.States.COMMENT)
                             self.log.print(self.get_position() + f">\tCommentaire ouvert.")
                             
                         case c if c.isalnum(): # Détection des identifiants
-                            self._stack.append(Lexer.States.IDENTIFIER)
+                            self._stack.append(Parser.States.IDENTIFIER)
                             self._id_buffer += c
                             self.log.print(self.get_position() + f">\tIdentifiant ouvert.")
                             
@@ -81,17 +87,17 @@ class Lexer:
                 
                 
                 # Quand un identifiant d'objet est en cours
-                case Lexer.States.IDENTIFIER:
+                case Parser.States.IDENTIFIER:
                     
                     match c:
                     
                         case '{': # Détection des fonctions
-                            self._stack.append(Lexer.States.FUNC)
+                            self._stack.append(Parser.States.FUNC)
                             self._open_object(DataTypes.FUNC)
                             self.log.print(self.get_position() + f">\tFonction ouverte.")
                             
                         case '(': # Détection des sets
-                            self._stack.append(Lexer.States.SET)
+                            self._stack.append(Parser.States.SET)
                             self._open_object(DataTypes.SET)
                             self.log.print(self.get_position() + f">\tSet ouvert.")
                           
@@ -110,7 +116,7 @@ class Lexer:
                 
                 
                 # Quand une chaîne de caractère littérale est en cours
-                case Lexer.States.LITTERAL:
+                case Parser.States.LITTERAL:
                     
                     match c:
                         
@@ -125,12 +131,12 @@ class Lexer:
                 
                 
                 # Quand une fonction est en construction
-                case Lexer.States.FUNC:
+                case Parser.States.FUNC:
                     
                     match c:
                     
                         case '#': # Détection des commentaires
-                            self._stack.append(Lexer.States.COMMENT)
+                            self._stack.append(Parser.States.COMMENT)
                             
                         case '}':
                         
@@ -139,7 +145,7 @@ class Lexer:
                             
                         case c if c.isalnum() or c in {'@', '.'}: # Détection des expressions
                         
-                            self._stack.append(Lexer.States.EXPRESSION)
+                            self._stack.append(Parser.States.EXPRESSION)
                             self._expression_buffer = c
                             self.log.print(self.get_position() + f">\tExpression ouverte.")
                             
@@ -150,7 +156,7 @@ class Lexer:
                             raise SyntaxError(self.get_position() + f"Undefined token: {c}")
                 
                 # Quand un set de valeurs est en construction
-                case Lexer.States.SET:
+                case Parser.States.SET:
                     
                     match c:
                     
@@ -160,7 +166,7 @@ class Lexer:
                             
                         case "'" | '"':
                             self._litt_char = c
-                            self._stack.append(Lexer.States.LITTERAL)
+                            self._stack.append(Parser.States.LITTERAL)
                             self.log.print(self.get_position() + f">\tValeur littérale ouverte.")
                             
                             
@@ -171,7 +177,7 @@ class Lexer:
                             raise SyntaxError(self.get_position() + f"Undefined token: {c}")
                 
                 # Quand on est dans un commentaire
-                case Lexer.States.COMMENT:
+                case Parser.States.COMMENT:
                 
                     match c:
                         
@@ -180,7 +186,7 @@ class Lexer:
                             self.log.print(self.get_position() + f">\tCommentaire fermé.")
                             
                             
-                case Lexer.States.EXPRESSION:
+                case Parser.States.EXPRESSION:
                 
                     match c:
                     
@@ -234,7 +240,7 @@ class Lexer:
     
         state = self._stack.pop()
         
-        if self._stack[-1] == Lexer.States.IDENTIFIER:
+        if self._stack[-1] == Parser.States.IDENTIFIER:
             self._stack.pop()
         
         name = self._id_buffer

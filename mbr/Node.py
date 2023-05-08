@@ -18,6 +18,7 @@ OBSERVATIONS
 '''
 
 import json
+import xml.etree.ElementTree as ET
 
 class Node:
     """
@@ -32,7 +33,7 @@ class Node:
     """
 
 
-    def __init__(self, text: str = "", index=0):
+    def __init__(self, text: str = "", index=0, origin: str = ""):
         """
         Constructeur de la classe.
         """
@@ -41,8 +42,33 @@ class Node:
         self.ind: int = 0
         self.children: list = []
         self.txt = text
+        self.origin = origin
         self.index = index
     pass
+
+    def to_xml(self, concat_leaves: bool = True) -> str:
+
+        root = ET.Element(self.txt)
+
+
+        def add_children(element, node):
+
+            if node.origin != "":
+                element.set("rule", node.origin)
+
+            if len(node.children) == 0:
+                element.text = node.txt
+                element.tag = "leaf"
+            else:
+                for child in node.children:
+                    sub = ET.SubElement(element, child.txt)
+                    add_children(sub, child)
+
+        add_children(root, self)
+
+        tree = ET.ElementTree(root)
+        ET.indent(tree, space="\t", level=0)
+        return ET.tostring(tree.getroot()).decode()
 
     @classmethod
     def from_list(cls, ls: list, indexify: bool = False, start_index: int = 0) -> list:
@@ -83,6 +109,7 @@ class Node:
 
         return s
     pass
+ 
 
     def relateAsParent(self, child, topLevel: bool = True, replace: bool = False) -> None:
         """

@@ -1,7 +1,10 @@
+"""
+Ce module définit la classe Ruleset, qui s'attache à compléter les règles et les rendre utilisables.
+"""
 
 from .Linker import Linker
 from .Logger import Logger, DEFAULT_LOG
-from .Lexer import unescape
+from .Parser import unescape
 from .Data import OTHER_
 
 

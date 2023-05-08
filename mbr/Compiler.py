@@ -1,4 +1,8 @@
-from mbr import Lexer, Linker, Ruleset, Logger
+"""
+La classe Compiler présente dans ce module s'occupe de gérer la pipeline de traitement nécessaire à 'élaboration de la base de règles, prenant en entrée les différents fichiers source impliqués et permettant une sortie binaire (.mbr) ou en JSON.
+"""
+
+from mbr import Parser, Linker, Ruleset, Logger
 import json
 import pickle
 
@@ -16,7 +20,7 @@ class Compiler:
         
             with open(source, mode="r", encoding= "utf-8") as f:
                 log.prefix = "['" + source + "'"
-                lex.append(Lexer.Lexer(f.read(), log))
+                lex.append(Parser.Parser(f.read(), log))
 
 
         # Mise en commun des symboles des différents fichiers sources
