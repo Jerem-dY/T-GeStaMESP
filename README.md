@@ -1,6 +1,6 @@
 # T-GeStaMESP
 
-T-GeStaMESP is a ***Tree-Generating State Machine Emulator for String Processing***. It provides the user with an easy-to-use language to describe Finite Automata that can then be applied to strings.
+T-GeStaMESP is a ***Tree-Generating State Machine Emulator for String Processing***. It provides the user with an easy-to-use language to describe Finite Automata and Transducers that can then be applied to strings.
 
 ## The 4 Constituents
 The language itself relies on 4 elements:
@@ -45,10 +45,10 @@ States can have several MODIFIERS in expressions.
 
 - a hat `<^>` means we do not want to write a new node, only changing the state internally. Beware, as it can lead to unforeseen behavior!
 
-- a percentage `<%>` means we do want to write, but **before** we get to the new state. This is particularly useful for suffixes, as they should both be added to the current token **and** signal the end of it.
+- a percentage `<%>` means we do want to write, but *before* we get to the new state. This is particularly useful for suffixes, as they should both be added to the current token **and** signal the end of it.
 
 ### Special elements
 
-- `<@>` is a special set that describes any token that does not belong to the different sets specified in the expressions. It is local, meaning that it does not have the same value across states: it is a way to describe potentially infinite tokens, thus acting like a `efault` in a switch-case statement.
+- `<@>` is a special set that describes any token that does not belong to the different sets specified in the expressions. It is local, meaning that it does not have the same value across states: it is a way to describe potentially infinite tokens, thus acting like a `default` in a switch-case statement.
 
-- `<.>` is a special state that signals we want to stay in the current state, ***without creating a new node***. This allows for *concatenation*. If one wants to create a new node while staying in the same state, all they have to do is write the state's name.
+- `<.>` is a special state that signals we want to stay in the current state, ***without creating a new node***. This allows for **concatenation**. If one wants to create a new node while staying in the same state, all they have to do is write the state's name.
