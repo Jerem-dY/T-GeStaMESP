@@ -1,0 +1,14 @@
+l'homme cognitif p.389-390
+
+mémoire déclarative/propositionnelle (en rapport à la logique propositionnelle) = langage naturel et image mentale, accessible à la conscience, connaissances verbalisables (acte conscient de remémoration), connaissances générales ou spécifiques
+mémoire procédurale = comportement, réagir selo son expérience, accessible seulement au travers de la performance
+
+modes de représentation distincts ?
+
+
+
+
+moteur d'inférence = raisonnement logique, or un ordinateur est une machine logique
+
+
+chaînage avant (Jurafsky & Martin p.568) donc règles écrites à l'avance puis appliquées à partir des prémisses, là où le chaînage arrière prend une affirmation et vérifie sa validité via les raisonnements présents dans la base de règles

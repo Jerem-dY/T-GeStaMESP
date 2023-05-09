@@ -1,26 +1,26 @@
+from mbr.Chunker import Chunker
 from mbr.Compiler import Compiler
-from mbr.Interpreter import Interpreter, MultipassInterpreter
+from mbr.Logger import Logger
+import pickle
+import glob
 
 
 if __name__ == "__main__":
 
+    with open("test/output.log", mode="w", encoding="utf-8") as log_file:
+        log = Logger(log_file)
 
-    # Récupération des fichiers de règles
-    
-    tokenizer = Compiler.load("tokenizer.mbr")
-    
-    ruleset = Compiler.load("chunker_pass_1.mbr")
-    
-    with open("texte_ref.txt", mode="r", encoding="utf-8") as f:
-        interp = Interpreter(tokenizer, f.read())
+        with open("test/texte_ref.txt", mode="r", encoding="utf-8") as f:
+        
+            chunks = Chunker(
+                Compiler.load("test/rulesets/tokenizer.mbr"), # On charge le tokenizer
+                [Compiler.load(file) for file in glob.glob("test/rulesets/chunker_pass_?.mbr")], # On charge les différentes passes de règles
+                f.read(),
+                log
+                )
 
-    
-    with open("texte_ref.txt", mode="r", encoding="utf-8") as f:
-        chunk_tree = MultipassInterpreter([ruleset], [i.concat() for i in interp._master_node.children])
-
-    
-    for node in chunk_tree._master_node.children:
-        print(f"[{node.txt:<5}]\t{node.concat(' ')}")
-
-    print(chunk_tree._master_node.to_xml())
-    print("Done !")
+        with open("test/out.xml", mode="w", encoding="utf-8") as out:
+            out.write(chunks.to_xml())
+            
+        with open("test/tokens.tsv", mode="w", encoding="utf-8") as out:
+            out.write(chunks.list_tokens())

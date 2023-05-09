@@ -101,7 +101,7 @@ class Interpreter:
         
         if not no_write:
             if not in_place:
-                self._nodes[-1].append(Node(self._state, origin=f"{self._previous_state} 薔 {self._state}"))
+                self._nodes[-1].append(Node(self._state, origin=f"{self._previous_state} → {self._state}"))
             
             
             if not written: # Si l'on souhaite écrire
@@ -113,6 +113,7 @@ class MultipassInterpreter(Interpreter):
 
     def __init__(self, automata: list[Compiler], tokens: list[str | Node], case_sensitive = True, log: Logger = DEFAULT_LOG):
 
+        tokens = Node.from_list(tokens, True) if not all([isinstance(x, Node) for x in tokens]) else tokens
         current_tokens = tokens
         tree = [tokens]
 

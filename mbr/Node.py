@@ -48,7 +48,7 @@ class Node:
 
     def to_xml(self, concat_leaves: bool = True) -> str:
 
-        root = ET.Element(self.txt)
+        root = ET.Element(self.txt if self.txt != "" else "root")
 
 
         def add_children(element, node):
@@ -68,7 +68,7 @@ class Node:
 
         tree = ET.ElementTree(root)
         ET.indent(tree, space="\t", level=0)
-        return ET.tostring(tree.getroot()).decode()
+        return ET.tostring(tree.getroot(), encoding="unicode")
 
     @classmethod
     def from_list(cls, ls: list, indexify: bool = False, start_index: int = 0) -> list:

@@ -1,0 +1,588 @@
+<root>
+	<NP rule="entry → NP">
+		<leaf>Déprimé</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>et</leaf>
+		<leaf>jamais</leaf>
+		<leaf>content</leaf>
+	</CCONJ>
+	<PUNC rule="CCONJ → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>un</leaf>
+		<leaf>homme</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>de</leaf>
+		<leaf>37</leaf>
+		<leaf>ans</leaf>
+	</PP>
+	<VP rule="PP → VP">
+		<leaf>se</leaf>
+		<leaf>voit</leaf>
+		<leaf>diagnostiqué</leaf>
+	</VP>
+	<PUNC rule="VP → PUNC">
+		<leaf>«</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Français</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>»</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Les</leaf>
+		<leaf>signaux</leaf>
+		<leaf>étaient</leaf>
+		<leaf>assez</leaf>
+		<leaf>explicites</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>mais</leaf>
+		<leaf>Jérémy</leaf>
+		<leaf>espérait</leaf>
+	</CCONJ>
+	<VP rule="CCONJ → VP">
+		<leaf>se</leaf>
+		<leaf>tromper</leaf>
+	</VP>
+	<PUNC rule="VP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<PUNC rule="PUNC → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>J'</leaf>
+		<leaf>avais</leaf>
+		<leaf>lu</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>sur</leaf>
+		<leaf>Doctissimo</leaf>
+	</PP>
+	<CCONJ rule="PP → CCONJ">
+		<leaf>que</leaf>
+	</CCONJ>
+	<SV rule="CCONJ → SV">
+		<leaf>cela</leaf>
+		<leaf>faisait</leaf>
+		<leaf>partie</leaf>
+	</SV>
+	<NP rule="SV → NP">
+		<leaf>des</leaf>
+		<leaf>symptômes</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>mais</leaf>
+	</CCONJ>
+	<SV rule="CCONJ → SV">
+		<leaf>je</leaf>
+		<leaf>n'</leaf>
+		<leaf>ai</leaf>
+		<leaf>pas</leaf>
+		<leaf>voulu</leaf>
+	</SV>
+	<VP rule="SV → VP">
+		<leaf>m'</leaf>
+		<leaf>alarmer</leaf>
+	</VP>
+	<PUNC rule="VP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Les</leaf>
+		<leaf>gens</leaf>
+	</NP>
+	<VP rule="NP → VP">
+		<leaf>se</leaf>
+		<leaf>moquaient</leaf>
+	</VP>
+	<PP rule="VP → PP">
+		<leaf>de</leaf>
+		<leaf>moi</leaf>
+	</PP>
+	<CCONJ rule="PP → CCONJ">
+		<leaf>et</leaf>
+	</CCONJ>
+	<VP rule="CCONJ → VP">
+		<leaf>me</leaf>
+		<leaf>disaient</leaf>
+	</VP>
+	<CCONJ rule="VP → CCONJ">
+		<leaf>mais</leaf>
+		<leaf>non</leaf>
+	</CCONJ>
+	<PUNC rule="CCONJ → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<VP rule="PUNC → VP">
+		<leaf>t'</leaf>
+	</VP>
+	<PP rule="VP → PP">
+		<leaf>en</leaf>
+		<leaf>fais</leaf>
+		<leaf>pas</leaf>
+	</PP>
+	<PUNC rule="PP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<VP rule="PUNC → VP">
+		<leaf>t'</leaf>
+		<leaf>es</leaf>
+		<leaf>pas</leaf>
+		<leaf>Français</leaf>
+	</VP>
+	<PUNC rule="VP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<VP rule="PUNC → VP">
+		<leaf>t'</leaf>
+		<leaf>es</leaf>
+		<leaf>juste</leaf>
+	</VP>
+	<NP rule="VP → NP">
+		<leaf>un</leaf>
+		<leaf>peu</leaf>
+		<leaf>surmené</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>en</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>ce</leaf>
+		<leaf>moment</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<PUNC rule="PUNC → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>témoigne-t-il</leaf>
+		<leaf>alors</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>qu'</leaf>
+	</CCONJ>
+	<SV rule="CCONJ → SV">
+		<leaf>il</leaf>
+		<leaf>râle</leaf>
+	</SV>
+	<PP rule="SV → PP">
+		<leaf>dans</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>les</leaf>
+		<leaf>embouteillages</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Mais</leaf>
+		<leaf>malheureusement</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>hier</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>le</leaf>
+		<leaf>couperet</leaf>
+		<leaf>tombe</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<PP rule="PUNC → PP">
+		<leaf>après</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>une</leaf>
+		<leaf>prise</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>de</leaf>
+		<leaf>sang</leaf>
+	</PP>
+	<PUNC rule="PP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Jérémy</leaf>
+		<leaf>est</leaf>
+		<leaf>positif</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>à</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>la</leaf>
+		<leaf>nationalité</leaf>
+		<leaf>française</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>une</leaf>
+		<leaf>affection</leaf>
+		<leaf>longue</leaf>
+		<leaf>durée</leaf>
+		<leaf>très</leaf>
+		<leaf>handicapante</leaf>
+		<leaf>remboursée</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>à</leaf>
+		<leaf>100%</leaf>
+	</PP>
+	<PP rule="PP → PP">
+		<leaf>par</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>la</leaf>
+		<leaf>Sécurité</leaf>
+		<leaf>sociale</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<PUNC rule="PUNC → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Toute</leaf>
+		<leaf>votre</leaf>
+		<leaf>vie</leaf>
+		<leaf>bascule</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>en</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>un</leaf>
+		<leaf>instant</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<SV rule="PUNC → SV">
+		<leaf>vous</leaf>
+		<leaf>savez</leaf>
+	</SV>
+	<CCONJ rule="SV → CCONJ">
+		<leaf>qu'</leaf>
+	</CCONJ>
+	<SV rule="CCONJ → SV">
+		<leaf>il</leaf>
+		<leaf>y</leaf>
+		<leaf>a</leaf>
+	</SV>
+	<NP rule="SV → NP">
+		<leaf>des</leaf>
+		<leaf>choses</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>que</leaf>
+	</CCONJ>
+	<SV rule="CCONJ → SV">
+		<leaf>vous</leaf>
+		<leaf>ne</leaf>
+		<leaf>pourrez</leaf>
+		<leaf>plus</leaf>
+		<leaf>jamais</leaf>
+		<leaf>apprécier</leaf>
+	</SV>
+	<PUNC rule="SV → PUNC">
+		<leaf>:</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>un</leaf>
+		<leaf>voyage</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>au</leaf>
+		<leaf>soleil</leaf>
+	</PP>
+	<PUNC rule="PP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>un</leaf>
+		<leaf>film</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>un</leaf>
+		<leaf>mariage</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Vous</leaf>
+		<leaf>trouverez</leaf>
+		<leaf>toujours</leaf>
+	</NP>
+	<NP rule="NP → NP">
+		<leaf>quelque</leaf>
+		<leaf>chose</leaf>
+	</NP>
+	<SV rule="NP → SV">
+		<leaf>qui</leaf>
+		<leaf>ne</leaf>
+		<leaf>va</leaf>
+		<leaf>pas</leaf>
+	</SV>
+	<PUNC rule="SV → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Vous</leaf>
+		<leaf>savez</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>que</leaf>
+	</CCONJ>
+	<CCONJ rule="CCONJ → CCONJ">
+		<leaf>quand</leaf>
+	</CCONJ>
+	<SV rule="CCONJ → SV">
+		<leaf>on</leaf>
+	</SV>
+	<SV rule="SV → SV">
+		<leaf>vous</leaf>
+		<leaf>demandera</leaf>
+	</SV>
+	<PUNC rule="SV → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<SV rule="PUNC → SV">
+		<leaf>ça</leaf>
+		<leaf>va</leaf>
+	</SV>
+	<PUNC rule="SV → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<SV rule="PUNC → SV">
+		<leaf>vous</leaf>
+		<leaf>répondrez</leaf>
+		<leaf>désormais</leaf>
+	</SV>
+	<NP rule="SV → NP">
+		<leaf>des</leaf>
+		<leaf>phrases</leaf>
+		<leaf>comme</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>écoute</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<SV rule="PUNC → SV">
+		<leaf>on</leaf>
+		<leaf>fait</leaf>
+		<leaf>comme</leaf>
+	</SV>
+	<SV rule="SV → SV">
+		<leaf>on</leaf>
+		<leaf>peut</leaf>
+	</SV>
+	<PUNC rule="SV → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>nous</leaf>
+		<leaf>glisse</leaf>
+	</NP>
+	<NP rule="NP → NP">
+		<leaf>le</leaf>
+		<leaf>primo</leaf>
+		<leaf>Français</leaf>
+	</NP>
+	<SV rule="NP → SV">
+		<leaf>qui</leaf>
+		<leaf>broie</leaf>
+	</SV>
+	<PP rule="SV → PP">
+		<leaf>du</leaf>
+		<leaf>noir</leaf>
+		<leaf>depuis</leaf>
+	</PP>
+	<CCONJ rule="PP → CCONJ">
+		<leaf>qu'</leaf>
+	</CCONJ>
+	<SV rule="CCONJ → SV">
+		<leaf>il</leaf>
+		<leaf>a</leaf>
+		<leaf>vu</leaf>
+	</SV>
+	<NP rule="SV → NP">
+		<leaf>la</leaf>
+		<leaf>météo</leaf>
+	</NP>
+	<NP rule="NP → NP">
+		<leaf>ce</leaf>
+		<leaf>matin</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Il</leaf>
+		<leaf>n'</leaf>
+		<leaf>existe</leaf>
+	</NP>
+	<NP rule="NP → NP">
+		<leaf>aucun</leaf>
+		<leaf>traitement</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>pour</leaf>
+		<leaf>soigner</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>cette</leaf>
+		<leaf>terrible</leaf>
+		<leaf>maladie</leaf>
+		<leaf>alors</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>que</leaf>
+		<leaf>près</leaf>
+	</CCONJ>
+	<PP rule="CCONJ → PP">
+		<leaf>de</leaf>
+		<leaf>65</leaf>
+		<leaf>millions</leaf>
+	</PP>
+	<PP rule="PP → PP">
+		<leaf>de</leaf>
+		<leaf>personnes</leaf>
+		<leaf>sont</leaf>
+		<leaf>atteintes</leaf>
+	</PP>
+	<PP rule="PP → PP">
+		<leaf>de</leaf>
+		<leaf>nationalité</leaf>
+		<leaf>française</leaf>
+	</PP>
+	<PUNC rule="PP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<PUNC rule="PUNC → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Pour</leaf>
+		<leaf>l'</leaf>
+		<leaf>instant</leaf>
+	</NP>
+	<NP rule="NP → NP">
+		<leaf>la</leaf>
+		<leaf>seule</leaf>
+		<leaf>chose</leaf>
+	</NP>
+	<SV rule="NP → SV">
+		<leaf>qui</leaf>
+		<leaf>marche</leaf>
+	</SV>
+	<PP rule="SV → PP">
+		<leaf>pour</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>les</leaf>
+		<leaf>soulager</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>,</leaf>
+	</PUNC>
+	<SV rule="PUNC → SV">
+		<leaf>c'</leaf>
+		<leaf>est</leaf>
+	</SV>
+	<NP rule="SV → NP">
+		<leaf>le</leaf>
+		<leaf>vin</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>Mais</leaf>
+	</NP>
+	<NP rule="NP → NP">
+		<leaf>ce</leaf>
+		<leaf>n'</leaf>
+		<leaf>est</leaf>
+	</NP>
+	<CCONJ rule="NP → CCONJ">
+		<leaf>qu'</leaf>
+	</CCONJ>
+	<NP rule="CCONJ → NP">
+		<leaf>un</leaf>
+		<leaf>soin</leaf>
+		<leaf>palliatif</leaf>
+	</NP>
+	<SV rule="NP → SV">
+		<leaf>qui</leaf>
+		<leaf>ne</leaf>
+		<leaf>traite</leaf>
+		<leaf>pas</leaf>
+	</SV>
+	<NP rule="SV → NP">
+		<leaf>la</leaf>
+		<leaf>cause</leaf>
+	</NP>
+	<PP rule="NP → PP">
+		<leaf>de</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>la</leaf>
+		<leaf>maladie</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>"</leaf>
+	</PUNC>
+	<NP rule="PUNC → NP">
+		<leaf>déclare</leaf>
+	</NP>
+	<NP rule="NP → NP">
+		<leaf>le</leaf>
+		<leaf>docteur</leaf>
+		<leaf>Bernard</leaf>
+		<leaf>Moutier</leaf>
+	</NP>
+	<SV rule="NP → SV">
+		<leaf>lui-même</leaf>
+		<leaf>atteint</leaf>
+	</SV>
+	<PP rule="SV → PP">
+		<leaf>par</leaf>
+	</PP>
+	<NP rule="PP → NP">
+		<leaf>ce</leaf>
+		<leaf>terrible</leaf>
+		<leaf>mal</leaf>
+	</NP>
+	<PUNC rule="NP → PUNC">
+		<leaf>.</leaf>
+	</PUNC>
+</root>

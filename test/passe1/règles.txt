@@ -1,0 +1,86 @@
+# Règles du découpage en chunks
+
+entry*{
+	det = NP
+	adp = PP
+	rpron = VP
+	pron = SV
+	qt = PUNC
+	spunc = PUNC
+	wpunc = PUNC
+	cconj = CCONJ
+	@ = NP
+}
+
+
+NP:{
+	det = NP
+	adp = PP
+	rpron = VP
+	pron = SV
+	qt = PUNC
+	spunc = PUNC
+	wpunc = PUNC
+	cconj = CCONJ
+	@ = .
+}
+
+PP:{
+	det = NP
+	adp = PP
+	rpron = VP
+	pron = SV
+	qt = PUNC
+	spunc = PUNC
+	wpunc = PUNC
+	cconj = CCONJ
+	@ = .
+}
+
+VP:{
+	det = NP
+	adp = PP
+	rpron = VP
+	pron = SV
+	qt = PUNC
+	spunc = PUNC
+	wpunc = PUNC
+	cconj = CCONJ
+	@ = .
+}
+
+SV:{
+	det = NP
+	adp = PP
+	rpron = VP
+	pron = SV
+	qt = PUNC
+	spunc = PUNC
+	wpunc = PUNC
+	cconj = CCONJ
+	@ = .
+}
+
+PUNC:{
+	det = NP
+	adp = PP
+	rpron = VP
+	pron = SV
+	qt = PUNC
+	spunc = PUNC
+	wpunc = PUNC
+	cconj = CCONJ
+	@ = NP
+}
+
+CCONJ:{
+	det = NP
+	adp = PP
+	rpron = VP
+	pron = SV
+	qt = PUNC
+	spunc = PUNC
+	wpunc = PUNC
+	cconj = CCONJ
+	@ = .
+}
